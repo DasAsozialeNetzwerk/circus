@@ -53,8 +53,7 @@ connect params = do
          port = PortNumber (fromIntegral $ pPort params)
 
 write :: Session -> String -> IO ()
-write session message = do
-   hPutStr (sSocket session) (message ++ "\r\n")
+write session message = hPutStr (sSocket session) (message ++ "\r\n")
 
 identify :: Session -> IO Session
 identify session = do
@@ -69,7 +68,8 @@ listen :: Session -> IO ()
 listen session = do
    eof <- hIsEOF (sSocket session)
    when eof $ return ()
+
    line <- hGetLine (sSocket session)
-   pEvent (sParams session) $ line
+   pEvent (sParams session) line
    listen session
 
