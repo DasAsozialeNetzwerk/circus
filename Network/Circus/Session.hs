@@ -8,9 +8,11 @@ module Network.Circus.Session
   , listen
   ) where
 
-import Network
-import System.IO
-import Control.Monad
+import Network         (connectTo, PortID(..))
+import System.IO       (Handle, BufferMode(..), hSetBuffering, hIsEOF, hGetLine, hPutStr)
+import Control.Monad   (when)
+import Data.List       (isPrefixOf, stripPrefix)
+import Data.Maybe      (fromJust)
 
 data Session = Session
    { sParams :: Params
@@ -70,6 +72,7 @@ listen session = do
    when eof $ return ()
 
    line <- hGetLine (sSocket session)
+   when ("PING :" `isPrefixOf` line) (write session ((++) "PONG :" $ fromJust $ stripPrefix "PING :" line))
    pEvent (sParams session) line
    listen session
 
