@@ -11,7 +11,7 @@ module Network.Circus.Session
 import Network         (connectTo, PortID(..))
 import System.IO       (Handle, BufferMode(..), hSetBuffering, hIsEOF, hGetLine, hPutStr)
 import Control.Monad   (when)
-import Data.List       (isPrefixOf, stripPrefix)
+import Data.List       (isPrefixOf, stripPrefix, intercalate)
 import Data.Maybe      (fromJust)
 
 data Session = Session
@@ -49,6 +49,7 @@ connect params = do
    hSetBuffering h NoBuffering
    let session = Session { sParams = params, sSocket = h }
    _ <- identify session
+   write session $ (++) "JOIN " (intercalate ", " (pChannels params))
    listen session
    return session
    where addr = pAddr params
