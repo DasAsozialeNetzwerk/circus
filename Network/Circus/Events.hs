@@ -1,13 +1,14 @@
 module Network.Circus.Events (
     Event(..)
   , EventType(..)
-  , EventData(..)
   , EventFunction()
   ) where
 
 data Event = Event
-  { eType :: EventType
-  , eData :: EventData
+  { eType    :: EventType
+  , eUser    :: String
+  , eChannel :: String
+  , eArgs    :: [String]
   } deriving (Eq, Show)
 
 data EventType =
@@ -24,12 +25,5 @@ data EventType =
   | Part
   | Numeric
   deriving (Eq, Show)
-
-data EventData = EventData
-  { eUser    :: String
-  , eChannel :: String
-  , eCommand :: String
-  , eArgs    :: [String]
-  } deriving (Eq, Show)
 
 type EventFunction = Event -> IO ()
