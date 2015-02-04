@@ -7,7 +7,7 @@ module Network.Circus.Events (
 data Event = Event
   { eType :: EventType
   , eData :: EventData
-  }
+  } deriving (Eq, Show)
 
 data EventType =
     Privmsg
