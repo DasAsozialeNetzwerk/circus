@@ -54,6 +54,6 @@ instance Read EventType where
                            "PART"       -> [(Part, drop (length input) input)]
                            "NUMERIC"    -> [(Numeric, drop (length input) input)]
                            "PING"       -> [(Ping, drop (length input) input)]
-  readsPrec _ _ = []
+                           _            -> []
 
 type EventFunction = Event -> IO ()
