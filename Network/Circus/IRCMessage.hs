@@ -38,7 +38,7 @@ parsePrefix line
 
 parseCommand :: String -> Maybe [String]
 parseCommand cmdAndArgs
-  | all isDigit $ head cmdParts = Just ("NUMERIC" : tail cmdParts)
+  | all isDigit $ head cmdParts = Just ("NUMERIC" : cmdParts)
   | otherwise                   = Just cmdParts
   where cmdParts = words cmdAndArgs
 
