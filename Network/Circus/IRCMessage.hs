@@ -4,7 +4,7 @@ module Network.Circus.IRCMessage
   ) where
 
 import Data.Maybe (isNothing, fromJust, fromMaybe)
-import Data.Char  (isUpper)
+import Data.Char  (isUpper, isDigit)
 
 data IRCMessage = IRCMessage
   { iServerName :: Maybe String
@@ -37,7 +37,10 @@ parsePrefix line
         host     = tail $ dropWhile (/= '@') prefix
 
 parseCommand :: String -> Maybe [String]
-parseCommand cmdAndArgs = Just (words cmdAndArgs)
+parseCommand cmdAndArgs
+  | all isDigit $ head cmdParts = Just ("NUMERIC" : tail cmdParts)
+  | otherwise                   = Just cmdParts
+  where cmdParts = words cmdAndArgs
 
 combineParsed :: Maybe [String] -> Maybe [String] -> Maybe IRCMessage
 combineParsed prefixParts cmdParts
