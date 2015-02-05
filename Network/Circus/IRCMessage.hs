@@ -6,6 +6,7 @@ module Network.Circus.IRCMessage
 import Data.Maybe (isNothing, fromJust, fromMaybe)
 import Data.Char  (isUpper, isDigit)
 
+-- |The IRCMessage type is a simple representation of an irc message as defined by RFC 2812
 data IRCMessage = IRCMessage
   { iServerName :: Maybe String
   , iNick       :: Maybe String
@@ -15,6 +16,8 @@ data IRCMessage = IRCMessage
   , iParams     :: [String]
   } deriving (Show, Eq)
 
+-- |parseIRCMessage takes a line that was received from the IRC server and parses it to IRCMessage
+-- (to be exact Maybe IRCMessage)
 parseIRCMessage :: String -> Maybe IRCMessage
 parseIRCMessage line
   | isUpper $ head line = combineParsed (Just []) $ parseCommand line
