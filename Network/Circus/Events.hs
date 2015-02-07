@@ -1,7 +1,6 @@
 module Network.Circus.Events (
     Event(..)
   , EventType(..)
-  , EventFunction()
   , ircLineToEvent
   ) where
 
@@ -59,8 +58,6 @@ instance Read EventType where
     "NUMERIC"    -> [(Numeric, "")]
     "PING"       -> [(Ping, "")]
     _            -> []
-
-type EventFunction = Event -> IO ()
 
 ircLineToEvent :: String -> Event
 ircLineToEvent l = Event

@@ -1,7 +1,10 @@
 import Network.Circus
+import Data.Maybe      (fromJust)
 
 handleEvent :: EventFunction
-handleEvent = print 
+handleEvent _ ev = case eType ev of
+                      Privmsg -> putStrLn $ fromJust (eNick ev) ++ " said in " ++ fromJust (eChannel ev) ++ ": " ++ head (eArgs ev)
+                      _      -> print ev
 
 main :: IO Session
 main = connect server
