@@ -8,11 +8,12 @@ module Network.Circus.Session
   , listen
   ) where
 
-import Network         (connectTo, PortID(..))
-import System.IO       (Handle, BufferMode(..), hSetBuffering, hIsEOF, hGetLine, hPutStr)
-import Control.Monad   (when)
-import Data.List       (isPrefixOf, stripPrefix, intercalate)
-import Data.Maybe      (fromJust)
+import Network                (connectTo, PortID(..))
+import Network.Circus.Events  (EventFunction(), ircLineToEvent)
+import System.IO              (Handle, BufferMode(..), hSetBuffering, hIsEOF, hGetLine, hPutStr)
+import Control.Monad          (when)
+import Data.List              (isPrefixOf, stripPrefix, intercalate)
+import Data.Maybe             (fromJust)
 
 data Session = Session
    { sParams :: Params
@@ -27,11 +28,11 @@ data Params = Params
    , pReal :: String
    , pChannels :: [String]
    -- this will be a list later
-   , pEvent :: String -> IO ()
+   , pEvent :: EventFunction
    , pDebug :: Bool
    }
 
-defaultParams :: String -> (String -> IO ()) -> Params
+defaultParams :: String -> EventFunction -> Params
 defaultParams addr eventfn = Params
    { pAddr = addr
    , pPort = 6667
@@ -79,6 +80,6 @@ listen session = do
 
    line <- hGetLine (sSocket session)
    when ("PING :" `isPrefixOf` line) (write session ((++) "PONG :" $ fromJust $ stripPrefix "PING :" line))
-   pEvent (sParams session) line
+   pEvent (sParams session) $ ircLineToEvent line
    listen session
 

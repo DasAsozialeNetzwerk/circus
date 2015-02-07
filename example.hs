@@ -1,9 +1,8 @@
 import Network.Circus
 
-handleEvent :: String -> IO ()
-handleEvent message = do
-   print message
+handleEvent :: EventFunction
+handleEvent = print 
 
-main = do
-   connect server
-   where server = (defaultParams "irc.physicsporn.org" handleEvent) { pChannels = ["#lobby"] }
+main :: IO Session
+main = connect server
+  where server = (defaultParams "irc.physicsporn.org" handleEvent) { pChannels = ["#AsozialesNetzwerk"] }
