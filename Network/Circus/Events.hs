@@ -2,12 +2,16 @@ module Network.Circus.Events (
     Event(..)
   , EventType(..)
   , EventFunction()
+  , ircLineToEvent
   ) where
+
+import Network.Circus.IRCMessage (parseIRCMessage, IRCMessage(..))
+import Data.Maybe                (fromJust, isNothing)
 
 data Event = Event
   { eType    :: EventType
-  , eUser    :: String
-  , eChannel :: String
+  , eNick    :: Maybe String
+  , eChannel :: Maybe String
   , eArgs    :: [String]
   } deriving (Eq, Show)
 
@@ -57,3 +61,18 @@ instance Read EventType where
                            _            -> []
 
 type EventFunction = Event -> IO ()
+
+ircLineToEvent :: String -> Event
+ircLineToEvent l = Event
+  { eType    = read command
+  , eNick    = iNick parsedIRCLine
+  , eChannel = channel
+  , eArgs    = args
+  }
+  where parsedIRCLine = fromJust $ parseIRCMessage l
+        command       = iCommand parsedIRCLine
+        params        = iParams parsedIRCLine
+        channel       = if command `elem` [ "PRIVMSG", "JOIN", "TOPIC", "KICK", "NOTICE", "PART", "TOPIC"]
+                          then Just $ head params
+                          else Nothing
+        args          = if isNothing channel then params else tail params
