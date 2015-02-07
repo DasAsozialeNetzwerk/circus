@@ -49,7 +49,7 @@ connect params = do
    hSetBuffering h NoBuffering
    let session = Session { sParams = params, sSocket = h }
    _ <- identify session
-   write session $ (++) "JOIN " (intercalate ", " (pChannels params))
+   _ <- joinChannels session (pChannels params)
    listen session
    return session
    where addr = pAddr params
@@ -57,6 +57,11 @@ connect params = do
 
 write :: Session -> String -> IO ()
 write session message = hPutStr (sSocket session) (message ++ "\r\n")
+
+joinChannels :: Session -> [String] -> IO Session
+joinChannels session channels = do
+   write session $ (++) "JOIN " (intercalate ", " channels)
+   return session
 
 identify :: Session -> IO Session
 identify session = do
