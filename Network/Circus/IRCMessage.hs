@@ -47,7 +47,7 @@ parseCommand cmdAndArgs
         parsedCmdAndArgs = head cmdParts : parseParams (tail cmdParts)
 
 parseParams :: [String] -> [String]
-parseParams splitted = takeWhile firstSpaceNotColon splitted ++ [dropWhile (== ':') $ unwords $ dropWhile firstSpaceNotColon splitted]
+parseParams splitted = takeWhile firstSpaceNotColon splitted ++ [drop 1 $ unwords $ dropWhile firstSpaceNotColon splitted]
   where firstSpaceNotColon s = head s /= ':'
 
 combineParsed :: Maybe [String] -> Maybe [String] -> Maybe IRCMessage
