@@ -46,19 +46,19 @@ instance Show EventType where
 
 instance Read EventType where
   readsPrec _ input = case input of
-                           "PRIVMSG"    -> [(Privmsg, "")]
-                           "JOIN"       -> [(Join, "")] 
-                           "MODE"       -> [(Mode, "")]
-                           "TOPIC"      -> [(Topic, "")]
-                           "KICK"       -> [(Kick, "")]
-                           "QUIT"       -> [(Quit, "")]
-                           "NICK"       -> [(Nick, "")]
-                           "NOTICE"     -> [(Notice, "")]
-                           "DISCONNECT" -> [(Disconnect, "")]
-                           "PART"       -> [(Part, "")]
-                           "NUMERIC"    -> [(Numeric, "")]
-                           "PING"       -> [(Ping, "")]
-                           _            -> []
+    "PRIVMSG"    -> [(Privmsg, "")]
+    "JOIN"       -> [(Join, "")] 
+    "MODE"       -> [(Mode, "")]
+    "TOPIC"      -> [(Topic, "")]
+    "KICK"       -> [(Kick, "")]
+    "QUIT"       -> [(Quit, "")]
+    "NICK"       -> [(Nick, "")]
+    "NOTICE"     -> [(Notice, "")]
+    "DISCONNECT" -> [(Disconnect, "")]
+    "PART"       -> [(Part, "")]
+    "NUMERIC"    -> [(Numeric, "")]
+    "PING"       -> [(Ping, "")]
+    _            -> []
 
 type EventFunction = Event -> IO ()
 
