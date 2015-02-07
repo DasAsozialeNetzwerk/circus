@@ -41,9 +41,14 @@ parsePrefix line
 
 parseCommand :: String -> Maybe [String]
 parseCommand cmdAndArgs
-  | all isDigit $ head cmdParts = Just ("NUMERIC" : cmdParts)
-  | otherwise                   = Just cmdParts
+  | all isDigit $ head cmdParts = Just ("NUMERIC" : parsedCmdAndArgs)
+  | otherwise                   = Just parsedCmdAndArgs
   where cmdParts = words cmdAndArgs
+        parsedCmdAndArgs = head cmdParts : parseParams (tail cmdParts)
+
+parseParams :: [String] -> [String]
+parseParams splitted = takeWhile firstSpaceNotColon splitted ++ [tail $ unwords $ dropWhile firstSpaceNotColon splitted]
+  where firstSpaceNotColon s = head s /= ':'
 
 combineParsed :: Maybe [String] -> Maybe [String] -> Maybe IRCMessage
 combineParsed prefixParts cmdParts
