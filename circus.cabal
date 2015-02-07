@@ -8,7 +8,7 @@ synopsis:            IRC client library
 homepage:            github.com/asozialesnetzwerk/circus
 license:             GPL-3
 license-file:        LICENSE
-author:              sterneseeman, kohlrabi
+author:              sternenseeman, kohlrabi
 maintainer:          kohlrabi@ilovejesus.net
 -- copyright:           
 category:            Network
