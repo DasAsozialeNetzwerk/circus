@@ -50,7 +50,7 @@ combineParsed prefixParts cmdParts
   | isNothing prefixParts || isNothing cmdParts = Nothing
   | otherwise = Just IRCMessage
     { iServerName = if onlyServerName then Just $ head $ fromJust prefixParts   else Nothing
-    , iNick       = if normalPrefix   then Just $ head $ fromJust prefixParts else Nothing
+    , iNick       = if normalPrefix   then Just $ head $ fromJust prefixParts   else Nothing
     , iUser       = if normalPrefix   then Just $ (!! 1) $ fromJust prefixParts else Nothing
     , iHost       = if normalPrefix   then Just $ (!! 2) $ fromJust prefixParts else Nothing
     , iCommand    = head $ fromJust cmdParts
