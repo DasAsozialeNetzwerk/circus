@@ -9,7 +9,7 @@ homepage:            github.com/asozialesnetzwerk/circus
 license:             GPL-3
 license-file:        LICENSE
 author:              sternenseeman, kohlrabi
-maintainer:          kohlrabi@ilovejesus.net
+maintainer:          kohlrabi@kohlra.biz
 -- copyright:           
 category:            Network
 build-type:          Simple
@@ -20,7 +20,7 @@ library
   exposed-modules:    Network.Circus
   -- other-modules:       
   -- other-extensions:    
-  build-depends:       base >=4.6 && <=4.8
+  build-depends:       base
                      , network
   -- hs-source-dirs:      
   default-language:    Haskell2010
