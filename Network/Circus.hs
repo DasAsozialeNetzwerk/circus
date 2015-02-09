@@ -4,6 +4,6 @@ module Network.Circus (
   , module Network.Circus.IRCMessage
   ) where
 
-import Network.Circus.Session
-import Network.Circus.Events
-import Network.Circus.IRCMessage
+import           Network.Circus.Events
+import           Network.Circus.IRCMessage
+import           Network.Circus.Session

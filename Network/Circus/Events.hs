@@ -4,8 +4,8 @@ module Network.Circus.Events (
   , ircLineToEvent
   ) where
 
-import Network.Circus.IRCMessage (parseIRCMessage, IRCMessage(..))
-import Data.Maybe                (fromJust, isNothing)
+import           Data.Maybe                (fromJust, isNothing)
+import           Network.Circus.IRCMessage (IRCMessage (..), parseIRCMessage)
 
 data Event = Event
   { eType    :: EventType
@@ -46,7 +46,7 @@ instance Show EventType where
 instance Read EventType where
   readsPrec _ input = case input of
     "PRIVMSG"    -> [(Privmsg, "")]
-    "JOIN"       -> [(Join, "")] 
+    "JOIN"       -> [(Join, "")]
     "MODE"       -> [(Mode, "")]
     "TOPIC"      -> [(Topic, "")]
     "KICK"       -> [(Kick, "")]

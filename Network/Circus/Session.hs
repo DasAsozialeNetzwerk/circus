@@ -9,12 +9,13 @@ module Network.Circus.Session
   , EventFunction
   ) where
 
-import Network                (connectTo, PortID(..))
-import Network.Circus.Events  (Event(..), ircLineToEvent)
-import System.IO              (Handle, BufferMode(..), hSetBuffering, hIsEOF, hGetLine, hPutStr)
-import Control.Monad          (when)
-import Data.List              (isPrefixOf, stripPrefix, intercalate)
-import Data.Maybe             (fromJust)
+import           Control.Monad         (when)
+import           Data.List             (intercalate, isPrefixOf, stripPrefix)
+import           Data.Maybe            (fromJust)
+import           Network               (PortID (..), connectTo)
+import           Network.Circus.Events (Event (..), ircLineToEvent)
+import           System.IO             (BufferMode (..), Handle, hGetLine,
+                                        hIsEOF, hPutStr, hSetBuffering)
 
 data Session = Session
    { sParams :: Params
@@ -22,15 +23,15 @@ data Session = Session
    }
 
 data Params = Params
-   { pAddr :: String
-   , pPort :: Int
-   , pNick :: String
-   , pUser :: String
-   , pReal :: String
+   { pAddr     :: String
+   , pPort     :: Int
+   , pNick     :: String
+   , pUser     :: String
+   , pReal     :: String
    , pChannels :: [String]
    -- this will be a list later
-   , pEvent :: EventFunction
-   , pDebug :: Bool
+   , pEvent    :: EventFunction
+   , pDebug    :: Bool
    }
 
 type EventFunction = Session -> Event -> IO ()

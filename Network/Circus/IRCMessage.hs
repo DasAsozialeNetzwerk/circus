@@ -3,8 +3,8 @@ module Network.Circus.IRCMessage
   , parseIRCMessage
   ) where
 
-import Data.Maybe (isNothing, fromJust, fromMaybe)
-import Data.Char  (isUpper, isDigit)
+import           Data.Char  (isDigit, isUpper)
+import           Data.Maybe (fromJust, fromMaybe, isNothing)
 
 -- |The IRCMessage type is a simple representation of an irc message as defined by RFC 2812
 data IRCMessage = IRCMessage

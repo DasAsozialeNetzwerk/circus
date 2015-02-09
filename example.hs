@@ -1,5 +1,5 @@
-import Network.Circus
-import Data.Maybe      (fromJust)
+import           Data.Maybe     (fromJust)
+import           Network.Circus
 
 handleEvent :: EventFunction
 handleEvent _ ev = case eType ev of
